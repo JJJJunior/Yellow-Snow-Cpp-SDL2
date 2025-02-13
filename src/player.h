@@ -13,7 +13,9 @@
 class Player
 {
 public:
-    Player(std::shared_ptr<SDL_Renderer> renderer);
+    Player(std::shared_ptr<SDL_Renderer> new_renderer)
+        : renderer{new_renderer},
+          image{nullptr, SDL_DestroyTexture} {}
 
     void init();
     void draw();

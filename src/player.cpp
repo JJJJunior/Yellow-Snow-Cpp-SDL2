@@ -8,7 +8,7 @@
 #include "player.h"
 
 Player::Player(std::shared_ptr<SDL_Renderer> renderer)
-    : renderer{renderer},
+    : renderer{nullptr},
       image{nullptr, SDL_DestroyTexture} {}
 
 void Player::init()
@@ -20,7 +20,7 @@ void Player::init()
         throw std::runtime_error(error);
     }
 
-    if (SDL_QueryTexture(this->image.get(), nullptr, nullptr, &this->rect.w, &this->rect.h) != 0)
+    if (SDL_QueryTexture(this->image.get(), nullptr, nullptr, &this->rect.w, &this->rect.h))
     {
         auto error = std::format("Error querying Texture: {}", SDL_GetError());
         throw std::runtime_error(error);
