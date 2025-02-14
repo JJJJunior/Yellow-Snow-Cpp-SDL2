@@ -12,26 +12,47 @@
 class Flake
 {
 public:
-    Flake(std::shared_ptr<SDL_Renderer> renderer,
-          std::shared_ptr<SDL_Texture> image,
-          SDL_Rect rect,
-          bool is_white,
-          std::mt19937 &gen)
-        : renderer{renderer},
-          image{image},
-          rect{rect},
-          is_white{is_white},
-          gen{gen} {};
+  Flake(std::shared_ptr<SDL_Renderer> renderer,
+        std::shared_ptr<SDL_Texture> image,
+        SDL_Rect rect,
+        bool is_white,
+        std::mt19937 &gen)
+      : renderer{renderer},
+        image{image},
+        rect{rect},
+        is_white{is_white},
+        gen{gen} {};
 
-    void reset(bool is_full);
-    void update();
-    void draw();
+  void reset(bool is_full);
+  inline void init()
+  {
+    this->reset(true);
+  }
+  void update();
+  void draw() const;
+
+  inline int left() const
+  {
+    return this->rect.x;
+  }
+  inline int right() const
+  {
+    return this->rect.y + this->rect.w;
+  }
+  inline int bottom() const
+  {
+    return this->rect.y + this->rect.h;
+  }
+  inline bool isWhite() const
+  {
+    return this->is_white;
+  }
 
 private:
-    std::shared_ptr<SDL_Renderer> renderer;
-    std::shared_ptr<SDL_Texture> image;
-    SDL_Rect rect;
-    bool is_white;
-    std::mt19937 &gen;
+  std::shared_ptr<SDL_Renderer> renderer;
+  std::shared_ptr<SDL_Texture> image;
+  SDL_Rect rect;
+  bool is_white;
+  std::mt19937 &gen;
 };
 #endif

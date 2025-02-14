@@ -29,14 +29,14 @@ void Game::init()
     for (int i = 0; i < 10; i++)
     {
         auto flake = std::make_unique<Flake>(this->renderer, this->white_image, this->white_rect, true, this->gen);
-        flake->reset(true);
+        flake->init();
         this->flakes.emplace_back(std::move(flake));
     }
 
     for (int i = 0; i < 5; i++)
     {
         auto flake = std::make_unique<Flake>(this->renderer, this->yellow_image, this->yellow_rect, false, this->gen);
-        flake->reset(true);
+        flake->init();
         this->flakes.emplace_back(std::move(flake));
     }
 }

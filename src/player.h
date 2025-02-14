@@ -18,10 +18,7 @@ public:
           image{nullptr, SDL_DestroyTexture},
           rect{0, PLAYER_Y, 0, 0},
           keystate{nullptr},
-          flip{SDL_FLIP_NONE},
-          top_offset{16},
-          left_offset{47},
-          right_offset{43} {};
+          flip{SDL_FLIP_NONE} {};
 
     void init();
     void update();
@@ -29,23 +26,23 @@ public:
 
     inline int left() const
     {
-        return this->rect.x + this->left_offset;
+        return this->rect.x + PLAYER_LEFT_OFFSET;
     }
     inline int right() const
     {
-        return this->rect.x + this->rect.w - this->right_offset;
+        return this->rect.x + this->rect.w - PLAYER_RIGHT_OFFSET;
     }
     inline int top() const
     {
-        return this->rect.y + this->top_offset;
+        return this->rect.y + PLAYER_TOP_OFFSET;
     }
     inline void set_left()
     {
-        this->rect.x = -this->left_offset;
+        this->rect.x = -PLAYER_LEFT_OFFSET;
     }
     inline void set_right()
     {
-        this->rect.x = WINDOW_WIDTH - this->rect.w + this->right_offset;
+        this->rect.x = WINDOW_WIDTH - this->rect.w + PLAYER_RIGHT_OFFSET;
     }
 
 private:
@@ -54,9 +51,6 @@ private:
     SDL_Rect rect;
     const Uint8 *keystate;
     SDL_RendererFlip flip;
-    const int top_offset;
-    const int left_offset;
-    const int right_offset;
 };
 
 #endif
