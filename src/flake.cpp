@@ -9,7 +9,6 @@
 
 void Flake::reset(bool is_full)
 {
-  (void)is_full;
 
   int height = is_full ? WINDOW_HEIGHT * 2 : WINDOW_HEIGHT;
 

@@ -30,7 +30,7 @@ void Player::update()
 {
     if (this->keystate[SDL_SCANCODE_LEFT])
     {
-        this->rect.x -= PLAYER_SPEED;
+        this->rect.x -= PLAYER_VEL;
         if (this->left() < 0)
         {
             this->set_left();
@@ -39,7 +39,7 @@ void Player::update()
     }
     if (this->keystate[SDL_SCANCODE_RIGHT])
     {
-        this->rect.x += PLAYER_SPEED;
+        this->rect.x += PLAYER_VEL;
         if (this->right() > WINDOW_WIDTH)
         {
             this->set_right();

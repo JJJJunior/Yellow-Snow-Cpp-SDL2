@@ -23,6 +23,9 @@ Game::~Game()
 }
 void Game::init()
 {
+    this->init_sdl();
+    this->load_media();
+
     this->player.reset(new Player(this->renderer));
     this->player->init();
 
@@ -41,6 +44,35 @@ void Game::init()
     }
 }
 
+void Game::collision(std::unique_ptr<Flake> &flake)
+{
+    if (flake->bottom() > this->player->top() &&
+        flake->right() > this->player->left() &&
+        flake->left() < this->player->right())
+    {
+        if (flake->isWhite())
+        {
+            flake->reset(false);
+        }
+        else
+        {
+            this->is_playing = false;
+        }
+    }
+}
+
+void Game::reset()
+{
+    if (!this->is_playing)
+    {
+        this->is_playing = true;
+        for (auto &falke : this->flakes)
+        {
+            falke->init();
+        }
+    }
+}
+
 void Game::events()
 {
     while (SDL_PollEvent(&this->event))
@@ -56,6 +88,9 @@ void Game::events()
             case SDL_SCANCODE_ESCAPE:
                 this->running = false;
                 return;
+            case SDL_SCANCODE_SPACE:
+                this->reset();
+                break;
             default:
                 break;
             }
@@ -68,7 +103,15 @@ void Game::events()
 
 void Game::update()
 {
-    player->update();
+    if (this->is_playing)
+    {
+        this->player->update();
+        for (auto &flake : this->flakes)
+        {
+            flake->update();
+            this->collision(flake);
+        }
+    }
 }
 
 void Game::draw()

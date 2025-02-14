@@ -27,7 +27,7 @@ constexpr int PLAYER_LEFT_OFFSET = 45;
 constexpr int PLAYER_RIGHT_OFFSET = 45;
 constexpr int PLAYER_TOP_OFFSET = 16;
 
-constexpr int PLAYER_SPEED = 5;
+constexpr int PLAYER_VEL = 5;
 constexpr int GROUND = 550;
 constexpr int FLAKE_VEL = 5;
 

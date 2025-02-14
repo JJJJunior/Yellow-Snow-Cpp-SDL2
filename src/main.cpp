@@ -13,8 +13,6 @@ int main(int argc, char *argv[])
     try
     {
         Game game;
-        game.init_sdl();
-        game.load_media();
         game.init();
         game.run();
     }

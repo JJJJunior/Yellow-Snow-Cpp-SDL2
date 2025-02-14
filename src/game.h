@@ -27,18 +27,21 @@ public:
           white_rect{0, 0, 0, 0},
           yellow_rect{0, 0, 0, 0},
           rd{},
-          gen{rd()} {};
+          gen{rd()},
+          is_playing{true} {};
 
     ~Game();
 
-    void init_sdl();
-    void load_media();
     void init();
     void run();
 
 private:
+    void init_sdl();
+    void load_media();
     void events();
     void update();
+    void reset();
+    void collision(std::unique_ptr<Flake> &falke);
     void draw();
 
     std::unique_ptr<SDL_Window, decltype(&SDL_DestroyWindow)> window;
@@ -54,6 +57,7 @@ private:
     std::vector<std::unique_ptr<Flake>> flakes;
     std::random_device rd;
     std::mt19937 gen;
+    bool is_playing;
 };
 
 #endif

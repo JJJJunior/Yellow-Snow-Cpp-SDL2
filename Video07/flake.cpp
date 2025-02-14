@@ -1,6 +1,7 @@
 #include "flake.h"
 
-void Flake::reset(bool is_full) {
+void Flake::reset(bool is_full)
+{
 
     int height = is_full ? WINDOW_HEIGHT * 2 : WINDOW_HEIGHT;
 
@@ -12,14 +13,17 @@ void Flake::reset(bool is_full) {
     this->rect.y = -randY(this->gen) - this->rect.h;
 }
 
-void Flake::update() {
+void Flake::update()
+{
     this->rect.y += FLAKE_VEL;
-    if (this->bottom() > GROUND) {
+    if (this->bottom() > GROUND)
+    {
         this->reset(false);
     }
 }
 
-void Flake::draw() const {
+void Flake::draw() const
+{
     SDL_RenderCopy(this->renderer.get(), this->image.get(), nullptr,
                    &this->rect);
 }
