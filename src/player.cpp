@@ -7,13 +7,6 @@
  */
 #include "player.h"
 
-<<<<<<< HEAD
-=======
-Player::Player(std::shared_ptr<SDL_Renderer> renderer)
-    : renderer{nullptr},
-      image{nullptr, SDL_DestroyTexture} {}
-
->>>>>>> d9bb957889ffef9c0355f1c72b35f31da79a7489
 void Player::init()
 {
     this->image.reset(IMG_LoadTexture(this->renderer.get(), "images/player.png"));

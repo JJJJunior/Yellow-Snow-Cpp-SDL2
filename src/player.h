@@ -15,7 +15,6 @@ class Player
 public:
     Player(std::shared_ptr<SDL_Renderer> new_renderer)
         : renderer{new_renderer},
-<<<<<<< HEAD
           image{nullptr, SDL_DestroyTexture},
           rect{0, PLAYER_Y, 0, 0},
           keystate{nullptr},
@@ -23,9 +22,6 @@ public:
           top_offset{16},
           left_offset{47},
           right_offset{43} {};
-=======
-          image{nullptr, SDL_DestroyTexture} {}
->>>>>>> d9bb957889ffef9c0355f1c72b35f31da79a7489
 
     void init();
     void update();
