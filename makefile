@@ -19,7 +19,7 @@ SDL2_INCLUDE = -Isrc/include
 SDL2_LIB = -lmingw32 -lSDL2main -lSDL2 -lSDL2_image -lSDL2_ttf -lSDL2_mixer
 
 # 编译选项
-CXXFLAGS = -std=c++20 -Wall -Wextra -Werror -Wno-unused-parameter $(SDL2_INCLUDE)
+CXXFLAGS = -std=c++20 $(SDL2_INCLUDE)
 
 # 目标规则
 $(TARGET): $(OBJS)

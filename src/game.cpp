@@ -7,9 +7,11 @@
  */
 #include "game.h"
 #include "player.h"
+#include "flake.h"
 
 Game::~Game()
 {
+    this->flakes.clear();
     this->backgroud.reset();
     this->renderer.reset();
     this->window.reset();
@@ -23,6 +25,20 @@ void Game::init()
 {
     this->player.reset(new Player(this->renderer));
     this->player->init();
+
+    for (int i = 0; i < 10; i++)
+    {
+        auto flake = std::make_unique<Flake>(this->renderer, this->white_image, this->white_rect, true, this->gen);
+        flake->reset(true);
+        this->flakes.emplace_back(std::move(flake));
+    }
+
+    for (int i = 0; i < 5; i++)
+    {
+        auto flake = std::make_unique<Flake>(this->renderer, this->yellow_image, this->yellow_rect, false, this->gen);
+        flake->reset(true);
+        this->flakes.emplace_back(std::move(flake));
+    }
 }
 
 void Game::events()
@@ -50,6 +66,11 @@ void Game::events()
     }
 }
 
+void Game::update()
+{
+    player->update();
+}
+
 void Game::draw()
 {
     SDL_RenderClear(this->renderer.get());
@@ -57,6 +78,10 @@ void Game::draw()
     SDL_RenderCopy(this->renderer.get(), this->backgroud.get(), nullptr, nullptr);
 
     this->player->draw();
+    for (auto &falke : this->flakes)
+    {
+        falke->draw();
+    }
 
     SDL_RenderPresent(this->renderer.get());
 }
@@ -66,6 +91,8 @@ void Game::run()
     while (this->running)
     {
         this->events();
+
+        this->update();
 
         this->draw();
 

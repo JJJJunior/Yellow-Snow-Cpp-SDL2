@@ -28,10 +28,19 @@ void Game::init_sdl()
         throw std::runtime_error(error);
     }
 
-    this->renderer.reset(SDL_CreateRenderer(this->window.get(), -1, SDL_RENDERER_ACCELERATED));
+    this->renderer.reset(SDL_CreateRenderer(this->window.get(), -1, SDL_RENDERER_ACCELERATED), SDL_DestroyRenderer);
     if (!this->renderer)
     {
         auto error = std::format("Error creating Renderer: {}", SDL_GetError());
         throw std::runtime_error(error);
     }
+
+    std::unique_ptr<SDL_Surface, decltype(&SDL_FreeSurface)> icon_surf{IMG_Load("images/yellow.png"), SDL_FreeSurface};
+    if (!icon_surf)
+    {
+        auto error = std::format("Error loading Surface: {}", SDL_GetError());
+        throw std::runtime_error(error);
+    }
+
+    SDL_SetWindowIcon(this->window.get(), icon_surf.get());
 }
