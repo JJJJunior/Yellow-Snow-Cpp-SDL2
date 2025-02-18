@@ -1,14 +1,6 @@
-/**
- * @author junexiang
- * @email xj.master@mail.com
- * @create date 2025-02-13 15:55:03
- * @modify date 2025-02-13 15:55:03
- * @desc [description]
- */
-
 #include "game.h"
 
-int main(int argc, char *argv[])
+int main(int argc, char *args[])
 {
     try
     {
@@ -18,7 +10,7 @@ int main(int argc, char *argv[])
     }
     catch (const std::runtime_error &e)
     {
-        std::cerr << e.what() << std::endl;
+        std::cerr << e.what() << '\n';
         return 1;
     }
 

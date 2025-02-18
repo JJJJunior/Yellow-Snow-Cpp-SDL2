@@ -1,47 +1,47 @@
+/**
+ * @author junexiang
+ * @email xj.master@mail.com
+ * @create date 2025-02-13 15:56:19
+ * @modify date 2025-02-13 15:56:19
+ * @desc [description]
+ */
 #include "game.h"
-#include <memory>
+#include "player.h"
+#include "flake.h"
 
 Game::~Game()
 {
     this->flakes.clear();
     this->player.reset();
-
     this->yellow_image.reset();
     this->white_image.reset();
-    this->background.reset();
-
+    this->backgroud.reset();
     this->renderer.reset();
     this->window.reset();
 
     IMG_Quit();
     SDL_Quit();
 
-    std::cout << "all clean!" << '\n';
+    std::cout << "all clean!" << std::endl;
 }
-
 void Game::init()
 {
-    this->initSdl();
-    this->loadMedia();
+    this->init_sdl();
+    this->load_media();
 
     this->player.reset(new Player(this->renderer));
     this->player->init();
 
-    // white flakes
     for (int i = 0; i < 10; i++)
     {
-        auto flake = std::make_unique<Flake>(this->renderer, this->white_image,
-                                             this->white_rect, true, this->gen);
+        auto flake = std::make_unique<Flake>(this->renderer, this->white_image, this->white_rect, true, this->gen);
         flake->init();
         this->flakes.emplace_back(std::move(flake));
     }
 
-    // yellow flakes
     for (int i = 0; i < 5; i++)
     {
-        auto flake =
-            std::make_unique<Flake>(this->renderer, this->yellow_image,
-                                    this->yellow_rect, false, this->gen);
+        auto flake = std::make_unique<Flake>(this->renderer, this->yellow_image, this->yellow_rect, false, this->gen);
         flake->init();
         this->flakes.emplace_back(std::move(flake));
     }
@@ -49,7 +49,6 @@ void Game::init()
 
 void Game::collision(std::unique_ptr<Flake> &flake)
 {
-
     if (flake->bottom() > this->player->top() &&
         flake->right() > this->player->left() &&
         flake->left() < this->player->right())
@@ -70,9 +69,9 @@ void Game::reset()
     if (!this->is_playing)
     {
         this->is_playing = true;
-        for (auto &flake : this->flakes)
+        for (auto &falke : this->flakes)
         {
-            flake->init();
+            falke->init();
         }
     }
 }
@@ -118,16 +117,16 @@ void Game::update()
     }
 }
 
-void Game::draw() const
+void Game::draw()
 {
     SDL_RenderClear(this->renderer.get());
 
-    SDL_RenderCopy(this->renderer.get(), this->background.get(), nullptr,
-                   nullptr);
+    SDL_RenderCopy(this->renderer.get(), this->backgroud.get(), nullptr, nullptr);
+
     this->player->draw();
-    for (auto &flake : this->flakes)
+    for (auto &falke : this->flakes)
     {
-        flake->draw();
+        falke->draw();
     }
 
     SDL_RenderPresent(this->renderer.get());

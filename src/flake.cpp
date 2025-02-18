@@ -1,35 +1,27 @@
-/**
- * @author junexiang
- * @email xj.master@mail.com
- * @create date 2025-02-14 20:20:32
- * @modify date 2025-02-14 20:20:32
- * @desc [description]
- */
 #include "flake.h"
 
-void Flake::reset(bool is_full)
-{
+void Flake::reset(bool full) {
+    std::uniform_int_distribution<int> randx(0, (WINDOW_WIDTH - this->rect.w));
 
-  int height = is_full ? WINDOW_HEIGHT * 2 : WINDOW_HEIGHT;
+    int height = full ? WINDOW_HEIGHT * 2 : WINDOW_HEIGHT;
+    std::uniform_int_distribution<int> randy(0, height);
 
-  std::uniform_int_distribution<int> randX(0, (WINDOW_WIDTH - this->rect.w));
-
-  std::uniform_int_distribution<int> randY(0, height);
-
-  this->rect.x = randX(this->gen);
-
-  this->rect.y = -randY(this->gen) - this->rect.h;
+    this->rect.x = randx(this->gen);
+    this->rect.y = -randy(this->gen) - this->rect.h;
+    this->pos_y = this->rect.y;
 }
 
-void Flake::update()
-{
-  this->rect.y += FLAKE_VEL;
-  if (this->bottom() > GROUND)
-  {
-    this->reset(false);
-  }
+void Flake::init() { this->reset(true); }
+
+void Flake::update(double dt) {
+    this->pos_y += FLAKE_VEL * dt;
+    this->rect.y = (int)this->pos_y;
+    if (this->bottom() > GROUND) {
+        this->reset(false);
+    }
 }
-void Flake::draw() const
-{
-  SDL_RenderCopy(this->renderer.get(), this->image.get(), nullptr, &this->rect);
+
+void Flake::draw() {
+    SDL_RenderCopy(this->renderer.get(), this->image.get(), nullptr,
+                   &this->rect);
 }
